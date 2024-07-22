@@ -1,4 +1,5 @@
 export default class MessageObj {
+  id;
   nickname;
   message;
 

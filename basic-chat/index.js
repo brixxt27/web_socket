@@ -26,7 +26,6 @@ class MessageObj {
 const users = new Map();
 
 app.get("/", (req, res) => {
-  // res.sendFile(__dirname + "/index.html");
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
@@ -45,12 +44,15 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("chat message", obj);
   });
 
+  /**
+   * 유저가 타이핑 중이라면 자신을 제외한 소켓에 연결된 모든 유저에게 타이핑 중이라는 메시지를 보냅니다.
+   */
   socket.on("typing", (nickname) => {
     socket.broadcast.emit("typing", nickname + "님이 입력 중입니다.");
   });
 
   /**
-   * 채팅방에서 나가면 자신을 제외한 모든 유저에게 나갔다는 메시지를 보냅니다.
+   * 채팅방에서 나가면 자신을 제외한 소켓에 연결된 모든 유저에게 나갔다는 메시지를 보냅니다.
    */
   socket.on("disconnect", () => {
     socket.broadcast.emit(
@@ -60,6 +62,9 @@ io.on("connection", (socket) => {
   });
 });
 
+/**
+ * 3000 포트로 litening하도록 서버를 실행합니다.
+ */
 server.listen(3000, () => {
   console.log("Listening on *:3000");
 });
