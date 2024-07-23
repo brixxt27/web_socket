@@ -1,11 +1,14 @@
 import MessageObj from "./MessageObj.js"
 
 let socket = io()
-let nickname = prompt("Enter your nickname")
+let nickname = prompt("닉네임을 입력하세요.")
 
 let messages = document.getElementById("messages")
 let form = document.getElementById("form")
 let input = document.getElementById("input")
+let typingMessageDiv = document.getElementById("typing-message")
+
+let isTyping = false
 
 function viewMessage(obj) {
   let item = document.createElement("li")
@@ -16,19 +19,41 @@ function viewMessage(obj) {
 }
 
 form.addEventListener("submit", function (e) {
-  // submit event listener
   e.preventDefault()
   if (input.value) {
-    // 값이 존재한다면
     const messageObj = new MessageObj(nickname, input.value)
-    socket.emit("typing", nickname)
-    socket.emit("chat message", messageObj) // chat message 이벤트 발생
+    socket.emit("message", messageObj) // chat message 이벤트 발생
     viewMessage(messageObj)
     input.value = "" // input 값 초기화
+
+    socket.emit("stopTyping")
+    isTyping = false
   }
 })
 
-socket.on("chat message", function (messageObj) {
+input.addEventListener("input", function (e) {
+  if (input.value && !isTyping) {
+    socket.emit("typing", nickname)
+    isTyping = true
+  }
+  if (!input.value && isTyping) {
+    // 작성했다가 전부 지웠을 때
+    socket.emit("stopTyping")
+    isTyping = false
+  }
+})
+
+socket.on("typing", function (message) {
+  typingMessageDiv.textContent = message
+  typingMessageDiv.style.display = "block"
+})
+
+socket.on("stopTyping", function () {
+  typingMessageDiv.textContent = ""
+  typingMessageDiv.style.display = "none"
+})
+
+socket.on("message", function (messageObj) {
   viewMessage(messageObj)
 })
 

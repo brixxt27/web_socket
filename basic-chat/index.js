@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
   /**
    * 채팅 메시지를 받으면  해당 소켓의 모든 유저에게 메시지를 보냅니다.
    */
-  socket.on("chat message", (obj) => {
+  socket.on("message", (obj) => {
     const { nickname, message } = obj
     console.log(`${nickname}: ` + message)
     socket.broadcast.emit("chat message", obj)
@@ -49,6 +49,10 @@ io.on("connection", (socket) => {
    */
   socket.on("typing", (nickname) => {
     socket.broadcast.emit("typing", nickname + "님이 입력 중입니다.")
+  })
+
+  socket.on("stopTyping", () => {
+    socket.broadcast.emit("stopTyping")
   })
 
   /**

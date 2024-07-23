@@ -58,11 +58,24 @@
     #messages>li:nth-child(odd) {
       background: #efefef;
     }
+
+    #typing-message {
+      position: fixed;
+      bottom: 3rem;
+      left: 0;
+      right: 0;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      display: none;
+      font-style: italic;
+    }
   </style>
 </head>
 
 <body>
   <ul id="messages"></ul>
+  <div id="typing-message"></div>
   <form id="form" action="">
     <input id="input" autocomplete="off" /><button>Send</button>
   </form>
