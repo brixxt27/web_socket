@@ -49,14 +49,23 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
+      margin-bottom: 4rem;
     }
 
     #messages>li {
       padding: 0.5rem 1rem;
     }
 
-    #messages>li:nth-child(odd) {
-      background: #efefef;
+    .sent {
+      text-align: right;
+      background-color: #ffffff;
+      margin-left: auto;
+    }
+
+    .received {
+      text-align: left;
+      background-color: #efefef;
+      margin-right: auto;
     }
 
     #typing-message {
@@ -69,6 +78,7 @@
       text-align: center;
       display: none;
       font-style: italic;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
@@ -78,6 +88,7 @@
   <div id="typing-message"></div>
   <form id="form" action="">
     <input id="input" autocomplete="off" /><button>Send</button>
+    <button id="toggle-btn">Disconnect</button>
   </form>
   <script src="/socket.io/socket.io.js"></script>
   <script type="module" src="script.js"></script>

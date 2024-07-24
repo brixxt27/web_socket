@@ -1,10 +1,10 @@
 export default class MessageObj {
-  id;
-  nickname;
-  message;
+  id
+  nickname
+  message
 
   constructor(nickname, message) {
-    this.nickname = nickname;
-    this.message = message;
+    this.nickname = nickname
+    this.message = message
   }
 }
