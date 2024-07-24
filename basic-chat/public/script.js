@@ -1,6 +1,10 @@
 import MessageObj from './MessageObj.js'
 
-const socket = io()
+const socket = io({
+  auth: {
+    serverOffset: 0,
+  },
+})
 
 const messages = document.getElementById('messages')
 const form = document.getElementById('form')
@@ -79,8 +83,9 @@ socket.on('stopTyping', function () {
   typingMessageDiv.style.display = 'none'
 })
 
-socket.on('message', function (messageObj) {
+socket.on('message', function (messageObj, serverOffset) {
   viewMessage(messageObj)
+  socket.auth.serverOffset = serverOffset
 })
 
 socket.on('enter', function (messageObj) {
