@@ -2,6 +2,8 @@
   "tabWidth": 2,
   "useTabs": false,
   "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
